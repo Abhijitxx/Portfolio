@@ -3,12 +3,14 @@
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
 body { margin:0; background:var(--bg); color:var(--fg); font-family:'Space Grotesk',sans-serif; line-height:1.65; }
+body.is-loading { overflow:hidden; }
 a,button { color:inherit; }
 button { font:inherit; }
 .cursor-follower { position:fixed; top:-10px; left:-10px; z-index:40; width:18px; height:18px; border:1px solid var(--fg); border-radius:50%; pointer-events:none; opacity:0; transform:translate3d(-20px,-20px,0); transition:opacity .2s ease, width .2s ease, height .2s ease; }
 .cursor-follower.visible { opacity:.55; }
 body:has(a:hover) .cursor-follower,body:has(button:hover) .cursor-follower { width:28px; height:28px; opacity:.35; }
-.loader { position:fixed; inset:0; z-index:50; display:grid; place-items:center; align-content:center; gap:1rem; overflow:hidden; background:var(--bg); color:var(--fg); }
+.page-content.is-loading { visibility:hidden; }
+.loader { position:fixed; inset:0; z-index:50; width:100%; height:100vh; height:100dvh; display:grid; place-items:center; align-content:center; gap:1rem; overflow:hidden; background:var(--bg); color:var(--fg); }
 .loader-mark { font-size:clamp(2.5rem, 8vw, 5rem); font-weight:700; letter-spacing:-.1em; }
 .loader-mark span { letter-spacing:0; }
 .loader-dots { display:flex; gap:.35rem; }

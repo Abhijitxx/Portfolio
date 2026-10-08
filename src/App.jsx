@@ -396,7 +396,11 @@ function App() {
   const reduce = useReducedMotion()
 
   useEffect(() => {
-    const timer = window.setTimeout(() => setLoading(false), 1500)
+    const timer = window.setTimeout(() => {
+      document.body.classList.remove('is-loading')
+      setLoading(false)
+    }, 1500)
+    document.body.classList.add('is-loading')
     const onScroll = () => {
       document.documentElement.style.setProperty(
         '--scroll',
@@ -407,6 +411,7 @@ function App() {
     onScroll()
     return () => {
       window.clearTimeout(timer)
+      document.body.classList.remove('is-loading')
       window.removeEventListener('scroll', onScroll)
     }
   }, [])
@@ -432,23 +437,25 @@ function App() {
           </m.div>
         )}
       </AnimatePresence>
-      <CursorFollower />
-      <div className="grain" />
-      <div className="scroll-progress" />
-      <Navbar />
-      <main id="main-content">
-        <Hero />
-        <Projects />
-        <Leadership />
-        <Skills />
-        <Education />
-        <Certifications />
-        <Contact />
-      </main>
-      <footer className="footer container">
-        <span>© {new Date().getFullYear()} {content.name}</span>
-        <span className="mono">Built with care, not noise.</span>
-      </footer>
+      <div className={`page-content${loading ? ' is-loading' : ''}`}>
+        <CursorFollower />
+        <div className="grain" />
+        <div className="scroll-progress" />
+        <Navbar />
+        <main id="main-content">
+          <Hero />
+          <Projects />
+          <Leadership />
+          <Skills />
+          <Education />
+          <Certifications />
+          <Contact />
+        </main>
+        <footer className="footer container">
+          <span>© {new Date().getFullYear()} {content.name}</span>
+          <span className="mono">Built with care, not noise.</span>
+        </footer>
+      </div>
     </>
   )
 }
