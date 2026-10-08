@@ -134,9 +134,9 @@ function Hero() {
             <m.a variants={reveal} className="button primary" href="#projects">
               View Projects <ArrowUpRight size={16} />
             </m.a>
-            <m.a variants={reveal} className="button secondary" href={content.resume} download>
+            {content.resume && <m.a variants={reveal} className="button secondary" href={content.resume} download>
               Download Resume <ArrowUpRight size={16} />
-            </m.a>
+            </m.a>}
             <m.a variants={reveal} className="button text-button" href="#contact">
               Contact <ArrowUpRight size={16} />
             </m.a>
@@ -339,9 +339,9 @@ function Contact() {
           <A href={gmailUrl} target="_blank" rel="noreferrer" className="button primary">
             Email me <ArrowUpRight size={16} />
           </A>
-          <A href={content.resume} download className="button secondary">
+          {content.resume && <A href={content.resume} download className="button secondary">
             Download resume <ArrowUpRight size={16} />
-          </A>
+          </A>}
           <A href={content.linkedin} target="_blank" rel="noreferrer" className="button secondary">
             LinkedIn <ArrowUpRight size={16} />
           </A>

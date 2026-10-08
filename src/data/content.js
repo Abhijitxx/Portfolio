@@ -12,7 +12,8 @@ export const content = {
   email: 'abhijitrajeev171@gmail.com',
   linkedin: 'https://www.linkedin.com/in/abhijit-r-3015b8257/',
   github: 'https://www.github.com/Abhijitxx/',
-  resume: '/Abhijit Resume.pdf',
+  resume: '',
+  // TODO: Add a public resume URL or restore the PDF before enabling download buttons.
   marquee: ['AI / ML', 'Data & SQL', 'Product thinking', 'Outreach', 'Events', 'Partnerships'],
   projects: [
     {
