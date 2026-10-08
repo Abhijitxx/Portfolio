@@ -415,7 +415,7 @@ function App() {
     <>
       <AnimatePresence>
         {loading && (
-          <m.div className="loader" initial={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.28, ease }}>
+          <m.div className="loader" initial={{ opacity: 1 }} exit={{ opacity: 1 }}>
             <m.div
               className="loader-mark"
               initial={reduce ? { opacity: 1 } : { opacity: 0 }}
