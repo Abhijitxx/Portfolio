@@ -5,15 +5,14 @@ export const content = {
   openTo: 'Open to full-time roles in data, AI/ML, product, partnerships and business development.',
   proof: [
     { value: '8.15', label: 'CGPA' },
-    { value: '04', label: 'Selected projects' },
-    { value: '50', label: 'People led' },
+    { value: '03', label: 'Selected projects' },
+    { value: '50+', label: 'People led' },
     { value: '₹25K', label: 'Sponsorship raised' },
   ],
   email: 'abhijitrajeev171@gmail.com',
   linkedin: 'https://www.linkedin.com/in/abhijit-r-3015b8257/',
   github: 'https://www.github.com/Abhijitxx/',
-  resume: '',
-  // TODO: Add a public resume URL or restore the PDF before enabling download buttons.
+  resume: 'https://drive.google.com/file/d/1UzYFi1qGPi254xeKcKvF1_OJfxi50tCQ/view?usp=drive_link',
   marquee: ['AI / ML', 'Data & SQL', 'Product thinking', 'Outreach', 'Events', 'Partnerships'],
   projects: [
     {
@@ -30,7 +29,7 @@ export const content = {
       summary: 'An explainable detection system tested on synthetic electricity usage data.',
       built: ['Generated hourly usage data for 500 consumers over 90 days.', 'Engineered 34 statistical, temporal and anomaly-based features.', 'Built a five-model ensemble and an eight-rule explainable detection engine with real-time risk scoring.'],
       tech: ['Python', 'Machine Learning', 'Feature Engineering', 'Anomaly Detection'],
-      github: '', live: '', results: '',
+      github: '', live: 'https://electricity-theft-detection-1.onrender.com/', results: '',
       limitation: 'Next step: re-run and document the evaluation before reporting results.',
       // TODO: Add the project repository URL if it is available.
     },

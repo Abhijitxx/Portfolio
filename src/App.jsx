@@ -10,6 +10,7 @@ const nav = [
   ['leadership', 'Leadership'],
   ['skills', 'Skills'],
   ['education', 'Education'],
+  ['certifications', 'Certifications'],
   ['contact', 'Contact'],
 ]
 
@@ -18,6 +19,24 @@ const A = ({ href, children, className = '', ...props }) => (
     {children}
   </a>
 )
+
+function CursorFollower() {
+  const cursorRef = useRef(null)
+  const reduce = useReducedMotion()
+
+  useEffect(() => {
+    if (reduce || window.matchMedia('(pointer: coarse)').matches) return undefined
+    const cursor = cursorRef.current
+    const move = (event) => {
+      cursor.style.transform = `translate3d(${event.clientX}px, ${event.clientY}px, 0)`
+      cursor.classList.add('visible')
+    }
+    window.addEventListener('pointermove', move, { passive: true })
+    return () => window.removeEventListener('pointermove', move)
+  }, [reduce])
+
+  return <span ref={cursorRef} className="cursor-follower" aria-hidden="true" />
+}
 
 function SectionHeading({ index, children }) {
   return (
@@ -134,7 +153,7 @@ function Hero() {
             <m.a variants={reveal} className="button primary" href="#projects">
               View Projects <ArrowUpRight size={16} />
             </m.a>
-            {content.resume && <m.a variants={reveal} className="button secondary" href={content.resume} download>
+            {content.resume &&             <m.a variants={reveal} className="button secondary" href={content.resume} target="_blank" rel="noreferrer">
               Download Resume <ArrowUpRight size={16} />
             </m.a>}
             <m.a variants={reveal} className="button text-button" href="#contact">
@@ -164,11 +183,26 @@ function Hero() {
   )
 }
 
-function ProjectCard({ project }) {
-  const [expanded, setExpanded] = useState(false)
+function ProjectCard({ project, expanded, onToggle }) {
   return (
-    <m.article className={`project-card ${expanded ? 'expanded' : ''}`} layout variants={reveal} whileHover={{ y: -4 }} transition={{ duration: 0.35, ease }}>
-      <button className="card-toggle" onClick={() => setExpanded((v) => !v)} aria-expanded={expanded}>
+    <m.article
+      className={`project-card ${expanded ? 'expanded' : ''}`}
+      layout
+      variants={reveal}
+      whileHover={{ y: -4 }}
+      transition={{ duration: 0.35, ease }}
+      onClick={(event) => {
+        if (!event.target.closest('a, button')) onToggle(project.title)
+      }}
+    >
+      <button
+        className="card-toggle"
+        onClick={(event) => {
+          event.stopPropagation()
+          onToggle(project.title)
+        }}
+        aria-expanded={expanded}
+      >
         <span className="mono">{project.index}</span>
         <span>
           <span className="project-category">{project.category}</span>
@@ -225,12 +259,15 @@ function ProjectCard({ project }) {
 }
 
 function Projects() {
+  const [openProject, setOpenProject] = useState(null)
+  const toggleProject = (title) => setOpenProject((current) => (current === title ? null : title))
+
   return (
     <section id="projects" className="section container">
       <SectionHeading index="01">Projects</SectionHeading>
       <m.div className="project-grid" variants={stagger} initial="hidden" whileInView="visible" viewport={{ once: true, amount: 0.2 }}>
         {content.projects.map((p) => (
-          <ProjectCard key={p.title} project={p} />
+          <ProjectCard key={p.title} project={p} expanded={openProject === p.title} onToggle={toggleProject} />
         ))}
       </m.div>
     </section>
@@ -339,7 +376,7 @@ function Contact() {
           <A href={gmailUrl} target="_blank" rel="noreferrer" className="button primary">
             Email me <ArrowUpRight size={16} />
           </A>
-          {content.resume && <A href={content.resume} download className="button secondary">
+          {content.resume &&           <A href={content.resume} target="_blank" rel="noreferrer" className="button secondary">
             Download resume <ArrowUpRight size={16} />
           </A>}
           <A href={content.linkedin} target="_blank" rel="noreferrer" className="button secondary">
@@ -355,7 +392,11 @@ function Contact() {
 }
 
 function App() {
+  const [loading, setLoading] = useState(true)
+  const reduce = useReducedMotion()
+
   useEffect(() => {
+    const timer = window.setTimeout(() => setLoading(false), 1500)
     const onScroll = () => {
       document.documentElement.style.setProperty(
         '--scroll',
@@ -364,11 +405,34 @@ function App() {
     }
     window.addEventListener('scroll', onScroll, { passive: true })
     onScroll()
-    return () => window.removeEventListener('scroll', onScroll)
+    return () => {
+      window.clearTimeout(timer)
+      window.removeEventListener('scroll', onScroll)
+    }
   }, [])
 
   return (
     <>
+      <AnimatePresence>
+        {loading && (
+          <m.div className="loader" initial={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.28, ease }}>
+            <m.div
+              className="loader-mark"
+              initial={reduce ? { opacity: 1 } : { opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={reduce ? { duration: 0 } : { duration: 0.45, ease }}
+            >
+              AR<span>.</span>
+            </m.div>
+            <m.div className="loader-dots" aria-label="Loading" animate={reduce ? undefined : { opacity: [1, 1, 0] }} transition={reduce ? undefined : { duration: 1.2 }}>
+              <span />
+              <span />
+              <span />
+            </m.div>
+          </m.div>
+        )}
+      </AnimatePresence>
+      <CursorFollower />
       <div className="grain" />
       <div className="scroll-progress" />
       <Navbar />
