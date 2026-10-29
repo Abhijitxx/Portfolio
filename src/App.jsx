@@ -6,8 +6,8 @@ import { reveal, stagger, ease, duration } from './lib/motion'
 import { useScrollSpy } from './hooks/useScrollSpy'
 
 const nav = [
-  ['projects', 'Projects'],
   ['leadership', 'Leadership'],
+  ['projects', 'Projects'],
   ['skills', 'Skills'],
   ['education', 'Education'],
   ['certifications', 'Certifications'],
@@ -125,14 +125,12 @@ function Hero() {
   const reduce = useReducedMotion()
   const { scrollYProgress } = useScroll({ target: heroRef, offset: ['start start', 'end start'] })
   const copyY = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : -12])
-  const proofY = useTransform(scrollYProgress, [0, 1], [0, reduce ? 0 : -18])
 
   return (
-    <>
-      <section id="top" className="hero container" ref={heroRef}>
+    <section id="top" className="hero container" ref={heroRef}>
         <m.div className="hero-copy" style={{ y: copyY }}>
           <m.p className="eyebrow" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration }}>
-            Chennai · AI & Data Science
+            {content.eyebrow}
           </m.p>
           <m.h1 initial="hidden" animate="visible" variants={stagger}>
             <m.span variants={reveal} className="outline-name">
@@ -153,33 +151,42 @@ function Hero() {
             <m.a variants={reveal} className="button primary" href="#projects">
               View Projects <ArrowUpRight size={16} />
             </m.a>
-            {content.resume &&             <m.a variants={reveal} className="button secondary" href={content.resume} target="_blank" rel="noreferrer">
+            {content.resume &&             <m.a variants={reveal} className="button secondary" href={content.resume} target="_blank" rel="noopener noreferrer">
               Download Resume <ArrowUpRight size={16} />
             </m.a>}
-            <m.a variants={reveal} className="button text-button" href="#contact">
+            <m.a variants={reveal} className="button secondary" href="#contact">
               Contact <ArrowUpRight size={16} />
             </m.a>
           </m.div>
-          <m.div className="proof-strip" initial="hidden" animate="visible" variants={stagger} style={{ y: proofY }}>
-            {content.proof.map((item) => (
-              <m.div variants={reveal} key={item.label}>
-                <strong>{item.value}</strong>
-                <span>{item.label}</span>
-              </m.div>
-            ))}
-          </m.div>
         </m.div>
       </section>
-      <div className="marquee" aria-label="Skills">
-        <div className="marquee-track">
-          {[...content.marquee, ...content.marquee].map((item, i) => (
-            <span key={`${item}-${i}`}>
-              {item} <b>✦</b>
-            </span>
-          ))}
-        </div>
+  )
+}
+
+function ProofStrip() {
+  return (
+    <m.div className="proof-strip container" initial="hidden" animate="visible" variants={stagger}>
+      {content.proof.map((item) => (
+        <m.div variants={reveal} key={item.label}>
+          <strong>{item.value}</strong>
+          <span>{item.label}</span>
+        </m.div>
+      ))}
+    </m.div>
+  )
+}
+
+function Marquee() {
+  return (
+    <div className="marquee" aria-label="Skills">
+      <div className="marquee-track">
+        {[...content.marquee, ...content.marquee].map((item, i) => (
+          <span key={`${item}-${i}`}>
+            {item} <b>✦</b>
+          </span>
+        ))}
       </div>
-    </>
+    </div>
   )
 }
 
@@ -371,12 +378,12 @@ function Contact() {
       <SectionHeading index="06">Contact</SectionHeading>
       <div className="contact-inner">
         <h2>Let’s talk about the next opportunity.</h2>
-        <p className="muted">I’m currently looking for full-time roles in AI, data, product, partnerships and outreach.</p>
+        <p className="muted">I’m currently looking for full-time roles in business development, client engagement, partnerships, and management training.</p>
         <div className="contact-links">
           <A href={gmailUrl} target="_blank" rel="noreferrer" className="button primary">
             Email me <ArrowUpRight size={16} />
           </A>
-          {content.resume &&           <A href={content.resume} target="_blank" rel="noreferrer" className="button secondary">
+          {content.resume &&           <A href={content.resume} target="_blank" rel="noopener noreferrer" className="button secondary">
             Download resume <ArrowUpRight size={16} />
           </A>}
           <A href={content.linkedin} target="_blank" rel="noreferrer" className="button secondary">
@@ -444,8 +451,10 @@ function App() {
         <Navbar />
         <main id="main-content">
           <Hero />
-          <Projects />
+          <ProofStrip />
+          <Marquee />
           <Leadership />
+          <Projects />
           <Skills />
           <Education />
           <Certifications />
