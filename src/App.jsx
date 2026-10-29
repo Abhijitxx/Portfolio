@@ -148,8 +148,8 @@ function Hero() {
             <strong>{content.openTo}</strong>
           </m.p>
           <m.div className="hero-actions" initial="hidden" animate="visible" variants={stagger}>
-            <m.a variants={reveal} className="button primary" href="#projects">
-              View Projects <ArrowUpRight size={16} />
+            <m.a variants={reveal} className="button primary" href="#leadership">
+              View Experience <ArrowUpRight size={16} />
             </m.a>
             {content.resume &&             <m.a variants={reveal} className="button secondary" href={content.resume} target="_blank" rel="noopener noreferrer">
               Download Resume <ArrowUpRight size={16} />
