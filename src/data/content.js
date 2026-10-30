@@ -1,4 +1,4 @@
-export const RESUME_URL = 'https://drive.google.com/file/d/1odVb8FPE65kbb9OIeycDcukhJqXJ-zgc/view?usp=drive_link'
+export const RESUME_URL = 'https://drive.google.com/file/d/1Z2lktkLfA9UjFIxCl3Eda0OHhOGneQke/view?usp=drive_link'
 
 export const content = {
   name: 'Abhijit R',
