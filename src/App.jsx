@@ -378,7 +378,7 @@ function Contact() {
       <SectionHeading index="06">Contact</SectionHeading>
       <div className="contact-inner">
         <h2>Let’s talk about the next opportunity.</h2>
-        <p className="muted">I’m currently looking for full-time roles in business development, client engagement, partnerships, and management training.</p>
+        <p className="muted">I’m looking for a business analyst or client-facing analytics role where I can turn business needs into clear, data-backed answers.</p>
         <div className="contact-links">
           <A href={gmailUrl} target="_blank" rel="noreferrer" className="button primary">
             Email me <ArrowUpRight size={16} />
